@@ -43,7 +43,7 @@
     if (isReverse) {
       document.title = "역산 · 생산 개수로 보는 벌크";
     } else if (isLoss) {
-      document.title = "손실 시간 계산기";
+      document.title = "시간 → 분 환산";
     } else {
       document.title = "몇 박스 나오는지 계산기";
     }
