@@ -122,6 +122,14 @@ body {
   min-width: 6.5rem;
 }
 
+.speed-result-line {
+  display: block;
+}
+
+.speed-result-line + .speed-result-line {
+  margin-top: 0.65rem;
+}
+
 .reverse-per-wrap {
   display: flex;
   align-items: stretch;
