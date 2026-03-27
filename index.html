@@ -23,6 +23,7 @@
     <nav class="site-nav" aria-label="기능 선택">
       <a href="#panel-main" id="tab-main" class="site-nav-btn site-nav-btn--active" aria-current="page">박스·수율 계산</a>
       <a href="#reverse" id="tab-reverse" class="site-nav-btn">역산 · 개수→벌크</a>
+      <a href="#loss" id="tab-loss" class="site-nav-btn">손실 시간 계산</a>
     </nav>
 
     <section id="panel-main" class="app-panel" aria-labelledby="heading-main">
@@ -98,12 +99,51 @@
     </section>
     </section>
 
+    <section id="loss" class="app-panel" aria-labelledby="heading-loss" hidden>
+    <header class="header">
+      <h1 id="heading-loss">손실 시간 계산기</h1>
+      <p class="subtitle">한 구간의 <strong>총 가동·계획 시간</strong>과 <strong>수율</strong>(또는 <strong>손실률</strong>)을 넣으면, 그 비율만큼의 <strong>손실로 환산된 시간</strong>과 <strong>유효 가동 시간</strong>을 볼 수 있습니다.</p>
+    </header>
+
+    <section class="panel formula">
+      <h2>계산식</h2>
+      <p class="formula-text"><strong>손실 시간(분) = 총 가동 시간(분) × (손실률 ÷ 100)</strong></p>
+      <p class="formula-text formula-text-second"><strong>수율(%)을 쓸 때</strong>: 손실률 = 100 − 수율 · <strong>손실률(%)을 직접 쓸 때</strong>: 그 값 그대로 사용합니다.</p>
+      <p class="formula-text formula-text-second"><strong>유효 가동 시간(분) = 총 가동 시간(분) − 손실 시간(분)</strong> (균일한 속도·손실 비율로 볼 때의 참고값입니다.)</p>
+      <p class="hint">실제 라인 정지·세척 시간과 다를 수 있습니다. 박스·수율 탭의 「97% 목표」와 맞춰 보려면 수율에 97을 넣을 수 있습니다.</p>
+    </section>
+
+    <section class="panel reverse-panel" aria-label="가동 시간과 수율·손실률 입력">
+      <div class="reverse-grid">
+        <label class="reverse-field">
+          총 가동·계획 시간 <span class="unit-piece">(분)</span>
+          <input type="text" id="lossTotalMin" inputmode="decimal" class="reverse-input" placeholder="예: 480" aria-label="총 가동 또는 계획 시간 분" />
+        </label>
+        <label class="reverse-field">
+          입력 방식
+          <select id="lossMode" class="reverse-input loss-mode-select" aria-label="수율 또는 손실률 중 무엇을 입력할지">
+            <option value="yield">수율 (%)</option>
+            <option value="loss">손실률 (%)</option>
+          </select>
+        </label>
+        <label class="reverse-field">
+          <span id="lossValueLabel">수율</span> <span class="unit-suffix">(%)</span>
+          <input type="text" id="lossValue" inputmode="decimal" class="reverse-input" placeholder="예: 97" aria-label="수율 또는 손실률 퍼센트" />
+        </label>
+      </div>
+      <p class="reverse-result" id="lossResult" role="status">
+        총 가동 시간(분)과 수율 또는 손실률을 넣으면 여기에 손실 시간이 표시됩니다.
+      </p>
+    </section>
+    </section>
+
     <footer class="footer">
       <p>브라우저에서만 동작하며 데이터는 저장되지 않습니다. GitHub Pages 등 웹에 올려도 같은 방식으로 동작합니다.</p>
     </footer>
   </div>
   <script src="app.js"></script>
   <script src="reverse.js"></script>
+  <script src="loss.js"></script>
   <script src="tab.js"></script>
 </body>
 </html>
