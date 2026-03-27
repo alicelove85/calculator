@@ -27,6 +27,7 @@ jobs:
         run: |
           mkdir -p _site
           cp index.html reverse.html styles.css app.js reverse.js tab.js .nojekyll _site/
+          cp site.webmanifest icon.svg icon-180.png icon-192.png icon-512.png _site/
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

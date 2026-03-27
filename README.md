@@ -23,6 +23,13 @@ git push -u origin main
 
    - 예: `https://본인아이디.github.io/calculator/`
 
+## 휴대폰 홈 화면에 추가
+
+- **Android (Chrome)**: 메뉴(⋮) → **홈 화면에 추가** 또는 주소창 설치 배너.
+- **iPhone (Safari)**: 공유(□↑) → **홈 화면에 추가**.
+- **HTTPS**로 열린 사이트(GitHub Pages 등)에서 동작합니다. 아이콘은 `site.webmanifest`·PNG·`apple-touch-icon`으로 연결돼 있습니다.
+- 아이콘 PNG를 다시 만들 때: `python3 build-icons.py`
+
 ## 한 페이지에서 쓰기
 
 - **박스·수율**과 **역산**은 모두 `index.html` 안에서 위쪽 탭으로 전환합니다.
