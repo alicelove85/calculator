@@ -1,8 +1,6 @@
 (function () {
   const qtyEl = document.getElementById("speedWorkQty");
-  const unitEl = document.getElementById("speedUnit");
   const minEl = document.getElementById("speedDurationMin");
-  const workersEl = document.getElementById("speedWorkers");
   const resultEl = document.getElementById("speedResult");
 
   function parseInput(str) {
@@ -13,21 +11,6 @@
     return Number.isFinite(n) ? n : NaN;
   }
 
-  /** 비우면 1, 아니면 1 이상 정수 */
-  function parseWorkers(str) {
-    const t = String(str ?? "").trim().replace(/,/g, "");
-    if (t === "") return 1;
-    const n = Number(t);
-    if (!Number.isFinite(n) || n < 1) return NaN;
-    if (Math.floor(n) !== n) return NaN;
-    return n;
-  }
-
-  function unitSuffix() {
-    const u = unitEl && unitEl.value;
-    return u ? u : "";
-  }
-
   function formatRate(n) {
     if (Number.isNaN(n) || n < 0) return "—";
     return new Intl.NumberFormat("ko-KR", {
@@ -36,96 +19,39 @@
     }).format(n);
   }
 
-  /** 예: 분당 개수 6개/분 · 시간당 개수 360개/시간 */
-  function speedPairText(perMin, perHour, suf) {
-    const u = suf || "";
-    return (
-      "<strong>분당 개수</strong> " +
-      formatRate(perMin) +
-      u +
-      "/분 · " +
-      "<strong>시간당 개수</strong> " +
-      formatRate(perHour) +
-      u +
-      "/시간"
-    );
-  }
-
   function updateSpeed() {
     if (!resultEl) return;
     const qTrim = String(qtyEl?.value ?? "").trim();
     const mTrim = String(minEl?.value ?? "").trim();
     if (qTrim === "" && mTrim === "") {
       resultEl.textContent =
-        "작업량·소요 시간(분)·작업자 수를 넣으면 여기에 분당·시간당 개수가 표시됩니다.";
+        "작업량과 소요 시간(분)을 넣으면 여기에 분당속도 (EA)가 표시됩니다.";
       return;
     }
 
     const qty = parseInput(qtyEl?.value);
     const mins = parseInput(minEl?.value);
-    const workers = parseWorkers(workersEl?.value);
-    const suf = unitSuffix();
 
     if (Number.isNaN(qty) || qty < 0) {
-      resultEl.textContent = "작업량을 0 이상의 숫자로 입력해 주세요.";
+      resultEl.textContent = "작업량(EA)을 0 이상의 숫자로 입력해 주세요.";
       return;
     }
     if (Number.isNaN(mins) || mins <= 0) {
       resultEl.textContent = "소요 시간(분)을 0보다 큰 숫자로 입력해 주세요.";
       return;
     }
-    if (Number.isNaN(workers)) {
-      resultEl.textContent =
-        "작업자 수는 1 이상의 정수(명)로 입력하거나 비워 주세요.";
-      return;
-    }
 
-    const linePerMin = qty / mins;
-    const linePerHour = linePerMin * 60;
-    const perPerMin = linePerMin / workers;
-    const perPerHour = perPerMin * 60;
-
-    const sub =
-      '<span class="reverse-result-sub">(작업량 ' +
-      formatRate(qty) +
-      (suf ? suf : "") +
-      ", 소요 " +
-      formatRate(mins) +
-      "분, 작업자 " +
-      formatRate(workers) +
-      "명)</span>";
-
-    if (workers === 1) {
-      resultEl.innerHTML =
-        '<span class="speed-result-line speed-result-speed">' +
-        speedPairText(linePerMin, linePerHour, suf) +
-        "</span> " +
-        '<span class="reverse-result-sub">(전체·1명당 동일)</span> ' +
-        sub;
-      return;
-    }
-
+    const perMin = qty / mins;
     resultEl.innerHTML =
-      '<span class="speed-result-line"><strong>전체(라인)</strong></span>' +
-      '<span class="speed-result-line speed-result-speed">' +
-      speedPairText(linePerMin, linePerHour, suf) +
-      "</span>" +
-      '<span class="speed-result-line"><strong>작업자 1명당</strong></span>' +
-      '<span class="speed-result-line speed-result-speed">' +
-      speedPairText(perPerMin, perPerHour, suf) +
-      "</span>" +
-      sub;
+      '<strong class="speed-ea-label">분당속도 (EA)</strong> ' +
+      '<strong class="speed-ea-value">' +
+      formatRate(perMin) +
+      "</strong>";
   }
 
   if (qtyEl && minEl) {
     qtyEl.addEventListener("input", updateSpeed);
     minEl.addEventListener("input", updateSpeed);
-    if (workersEl) {
-      workersEl.addEventListener("input", updateSpeed);
-    }
-    if (unitEl) {
-      unitEl.addEventListener("change", updateSpeed);
-    }
     updateSpeed();
   }
 })();

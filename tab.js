@@ -57,7 +57,7 @@
     } else if (isLoss) {
       document.title = "시간 → 분 환산";
     } else if (isSpeed) {
-      document.title = "작업 분당 개수";
+      document.title = "분당속도 (EA)";
     } else {
       document.title = "몇 박스 나오는지 계산기";
     }

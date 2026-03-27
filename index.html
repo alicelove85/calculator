@@ -10,13 +10,13 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="박스·수율" />
   <title>몇 박스 나오는지 계산기</title>
-  <link rel="manifest" href="site.webmanifest?v=10" />
-  <link rel="icon" href="icon.svg?v=10" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="icon-180.png?v=10" sizes="180x180" />
+  <link rel="manifest" href="site.webmanifest?v=11" />
+  <link rel="icon" href="icon.svg?v=11" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="icon-180.png?v=11" sizes="180x180" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=10" />
+  <link rel="stylesheet" href="styles.css?v=11" />
 </head>
 <body>
   <div class="app">
@@ -24,7 +24,7 @@
       <a href="#panel-main" id="tab-main" class="site-nav-btn site-nav-btn--active" aria-current="page">박스·수율 계산</a>
       <a href="#reverse" id="tab-reverse" class="site-nav-btn">역산 · 개수→벌크</a>
       <a href="#loss" id="tab-loss" class="site-nav-btn">시간 → 분 환산</a>
-      <a href="#speed" id="tab-speed" class="site-nav-btn">작업 분당 개수</a>
+      <a href="#speed" id="tab-speed" class="site-nav-btn">분당속도 (EA)</a>
     </nav>
 
     <section id="panel-main" class="app-panel" aria-labelledby="heading-main">
@@ -131,45 +131,28 @@
 
     <section id="speed" class="app-panel" aria-labelledby="heading-speed" hidden>
     <header class="header">
-      <h1 id="heading-speed">작업 분당 개수</h1>
-      <p class="subtitle">일정 시간 안에 처리한 <strong>작업량</strong>, <strong>소요 시간(분)</strong>, <strong>작업자 수</strong><span class="unit-suffix">(명)</span>를 넣으면 <strong>전체(라인)</strong>·<strong>1명당</strong>의 <strong>분당·시간당 개수</strong>를 구합니다.</p>
+      <h1 id="heading-speed">분당속도 (EA)</h1>
+      <p class="subtitle"><strong>작업량 (EA)</strong>와 <strong>소요 시간(분)</strong>을 넣으면 <strong>분당속도 (EA)</strong>만 계산합니다.</p>
     </header>
 
     <section class="panel formula">
       <h2>계산식</h2>
-      <p class="formula-text"><strong>전체(라인) 분당 개수 = 작업량 ÷ 소요 시간(분)</strong></p>
-      <p class="formula-text formula-text-second"><strong>전체 시간당 개수 = 전체 분당 개수 × 60</strong></p>
-      <p class="formula-text formula-text-second"><strong>작업자 1명당 분당 개수 = 작업량 ÷ 소요 시간(분) ÷ 작업자 수</strong></p>
-      <p class="formula-text formula-text-second"><strong>1명당 시간당 개수 = 1명당 분당 개수 × 60</strong></p>
-      <p class="hint">작업자 수를 비우면 <strong>1명</strong>으로 봅니다. 여러 명이 동시에 같은 작업량을 처리한 경우, 1명당은 전체를 인원으로 나눈 값입니다.</p>
+      <p class="formula-text"><strong>분당속도 (EA) = 작업량 (EA) ÷ 소요 시간(분)</strong></p>
     </section>
 
-    <section class="panel reverse-panel" aria-label="작업량·소요 시간·작업자 수 입력">
+    <section class="panel reverse-panel" aria-label="작업량과 소요 시간 입력">
       <div class="reverse-grid">
         <label class="reverse-field">
-          작업량
-          <div class="speed-qty-row">
-            <input type="text" id="speedWorkQty" inputmode="decimal" class="reverse-input" placeholder="예: 240" aria-label="작업량 숫자" />
-            <select id="speedUnit" class="unit-select speed-unit-select" aria-label="작업량 단위">
-              <option value="개">개</option>
-              <option value="건">건</option>
-              <option value="박스">박스</option>
-              <option value="회">회</option>
-              <option value="">(단위 없음)</option>
-            </select>
-          </div>
+          작업량 <span class="unit-suffix">(EA)</span>
+          <input type="text" id="speedWorkQty" inputmode="decimal" class="reverse-input" placeholder="예: 240" aria-label="작업량 EA" />
         </label>
         <label class="reverse-field">
           소요 시간 <span class="unit-suffix">(분)</span>
           <input type="text" id="speedDurationMin" inputmode="decimal" class="reverse-input" placeholder="예: 40" aria-label="소요 시간 분" />
         </label>
-        <label class="reverse-field">
-          작업자 수 <span class="unit-suffix">(명)</span>
-          <input type="text" id="speedWorkers" inputmode="numeric" class="reverse-input" placeholder="비우면 1명" aria-label="작업자 수 명" />
-        </label>
       </div>
-      <p class="reverse-result" id="speedResult" role="status">
-        작업량·소요 시간(분)·작업자 수를 넣으면 여기에 분당·시간당 개수가 표시됩니다.
+      <p class="reverse-result reverse-result--speed-only" id="speedResult" role="status">
+        작업량과 소요 시간(분)을 넣으면 여기에 분당속도 (EA)가 표시됩니다.
       </p>
     </section>
     </section>
@@ -178,10 +161,10 @@
       <p>브라우저에서만 동작하며 데이터는 저장되지 않습니다. GitHub Pages 등 웹에 올려도 같은 방식으로 동작합니다.</p>
     </footer>
   </div>
-  <script src="app.js?v=10"></script>
-  <script src="reverse.js?v=10"></script>
-  <script src="loss.js?v=10"></script>
-  <script src="speed.js?v=10"></script>
-  <script src="tab.js?v=10"></script>
+  <script src="app.js?v=11"></script>
+  <script src="reverse.js?v=11"></script>
+  <script src="loss.js?v=11"></script>
+  <script src="speed.js?v=11"></script>
+  <script src="tab.js?v=11"></script>
 </body>
 </html>
