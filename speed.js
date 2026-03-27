@@ -36,15 +36,15 @@
     }).format(n);
   }
 
-  /** 예: 6개/분 · 360개/시간 */
+  /** 예: 분당 개수 6개/분 · 시간당 개수 360개/시간 */
   function speedPairText(perMin, perHour, suf) {
     const u = suf || "";
     return (
-      "<strong>분당 속도</strong> " +
+      "<strong>분당 개수</strong> " +
       formatRate(perMin) +
       u +
       "/분 · " +
-      "<strong>시간당 속도</strong> " +
+      "<strong>시간당 개수</strong> " +
       formatRate(perHour) +
       u +
       "/시간"
@@ -57,7 +57,7 @@
     const mTrim = String(minEl?.value ?? "").trim();
     if (qTrim === "" && mTrim === "") {
       resultEl.textContent =
-        "작업량·소요 시간(분)·작업자 수를 넣으면 여기에 분당·시간당 속도가 표시됩니다.";
+        "작업량·소요 시간(분)·작업자 수를 넣으면 여기에 분당·시간당 개수가 표시됩니다.";
       return;
     }
 
