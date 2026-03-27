@@ -1,17 +1,7 @@
 (function () {
   const startTimeEl = document.getElementById("lossStartTime");
   const endTimeEl = document.getElementById("lossEndTime");
-  const hoursEl = document.getElementById("lossHours");
-  const minutesEl = document.getElementById("lossMinutes");
   const resultEl = document.getElementById("lossResult");
-
-  function parseOptional(str) {
-    if (str === undefined || str === null) return NaN;
-    const t = String(str).trim().replace(/,/g, "");
-    if (t === "") return 0;
-    const n = Number(t);
-    return Number.isFinite(n) ? n : NaN;
-  }
 
   /** "12:00", "9:5" → 그날 0시부터의 분. 실패 시 NaN */
   function parseClock(str) {
@@ -53,81 +43,51 @@
 
     const startS = String(startTimeEl?.value ?? "").trim();
     const endS = String(endTimeEl?.value ?? "").trim();
-    const rangeMode = startS !== "" || endS !== "";
 
-    const hTrim = String(hoursEl?.value ?? "").trim();
-    const mTrim = String(minutesEl?.value ?? "").trim();
-    const directMode = hTrim !== "" || mTrim !== "";
-
-    if (!rangeMode && !directMode) {
+    if (startS === "" && endS === "") {
       resultEl.textContent =
-        "시각 구간을 넣거나, 시간과 분을 넣으면 여기에 총 분이 표시됩니다.";
+        "시작과 종료 시각을 넣으면 여기에 경과 분이 표시됩니다.";
       return;
     }
 
-    if (rangeMode) {
-      if (startS === "" || endS === "") {
-        resultEl.textContent =
-          "시간 구간을 쓰려면 시작 시각과 종료 시각을 모두 입력해 주세요.";
-        return;
-      }
-      const startM = parseClock(startS);
-      const endM = parseClock(endS);
-      if (Number.isNaN(startM)) {
-        resultEl.textContent =
-          "시작 시각은 시:분 형식(예: 12:00)으로 입력해 주세요.";
-        return;
-      }
-      if (Number.isNaN(endM)) {
-        resultEl.textContent =
-          "종료 시각은 시:분 형식(예: 14:50)으로 입력해 주세요.";
-        return;
-      }
-      let diff = endM - startM;
-      if (diff < 0) diff += 24 * 60;
-      resultEl.innerHTML =
-        "<strong>" +
-        startS +
-        "</strong> ~ <strong>" +
-        endS +
-        "</strong> 구간은 <strong>" +
-        formatNum(diff) +
-        "</strong>분입니다. " +
-        '<span class="reverse-result-sub">(' +
-        formatHm(diff) +
-        ")</span>";
+    if (startS === "" || endS === "") {
+      resultEl.textContent =
+        "시간 구간을 쓰려면 시작 시각과 종료 시각을 모두 입력해 주세요.";
       return;
     }
 
-    const hours = parseOptional(hoursEl?.value);
-    const minutes = parseOptional(minutesEl?.value);
-
-    if (Number.isNaN(hours)) {
-      resultEl.textContent = "시간(시)을 올바르게 입력해 주세요.";
+    const startM = parseClock(startS);
+    const endM = parseClock(endS);
+    if (Number.isNaN(startM)) {
+      resultEl.textContent =
+        "시작 시각은 시:분 형식(예: 12:00)으로 입력해 주세요.";
       return;
     }
-    if (Number.isNaN(minutes)) {
-      resultEl.textContent = "분을 올바르게 입력해 주세요.";
-      return;
-    }
-    if (hours < 0 || minutes < 0) {
-      resultEl.textContent = "시간과 분은 0 이상으로 입력해 주세요.";
+    if (Number.isNaN(endM)) {
+      resultEl.textContent =
+        "종료 시각은 시:분 형식(예: 14:50)으로 입력해 주세요.";
       return;
     }
 
-    const totalMin = hours * 60 + minutes;
+    let diff = endM - startM;
+    if (diff < 0) diff += 24 * 60;
+
     resultEl.innerHTML =
-      "총 <strong>" +
-      formatNum(totalMin) +
+      "<strong>" +
+      startS +
+      "</strong> ~ <strong>" +
+      endS +
+      "</strong> 구간은 <strong>" +
+      formatNum(diff) +
       "</strong>분입니다. " +
       '<span class="reverse-result-sub">(' +
-      formatHm(totalMin) +
+      formatHm(diff) +
       ")</span>";
   }
 
-  const els = [startTimeEl, endTimeEl, hoursEl, minutesEl].filter(Boolean);
-  els.forEach(function (el) {
-    el.addEventListener("input", updateLoss);
-  });
-  updateLoss();
+  if (startTimeEl && endTimeEl) {
+    startTimeEl.addEventListener("input", updateLoss);
+    endTimeEl.addEventListener("input", updateLoss);
+    updateLoss();
+  }
 })();
