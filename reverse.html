@@ -2,57 +2,12 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>역산 · 생산 개수로 보는 벌크</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <title>역산으로 이동 중…</title>
+  <meta http-equiv="refresh" content="0; url=index.html#reverse" />
+  <link rel="canonical" href="index.html#reverse" />
+  <script>location.replace("index.html#reverse");</script>
 </head>
 <body>
-  <div class="app">
-    <nav class="site-nav" aria-label="페이지 이동">
-      <a href="index.html" class="site-nav-btn" target="_blank" rel="noopener noreferrer">박스·수율 계산</a>
-      <a href="reverse.html" class="site-nav-btn site-nav-btn--active" aria-current="page">역산 · 개수→벌크</a>
-    </nav>
-
-    <header class="header">
-      <h1>역산 · 생산 개수로 보는 벌크(kg)</h1>
-      <p class="subtitle">이미 나온(또는 목표) <strong>화장품 개수</strong>와 <strong>1개당 mL 또는 g</strong>로, 그에 맞는 <strong>벌크량(kg)</strong>을 역으로 계산합니다.</p>
-    </header>
-
-    <section class="panel formula">
-      <h2>계산식</h2>
-      <p class="formula-text"><strong>해당 벌크(kg) ≈ (생산·목표 개수 × 제품 1개당 mL 또는 g) ÷ 1000</strong></p>
-      <p class="hint">mL는 <strong>1 mL ≈ 1 g</strong>으로 kg와 맞추고, g는 중량 그대로 ÷1000 → kg입니다. 실제 충전·손실과 다를 수 있으니 참고용입니다.</p>
-    </section>
-
-    <section class="panel reverse-panel" aria-label="생산 개수와 1개당 내용량 입력">
-      <div class="reverse-grid">
-        <label class="reverse-field">
-          생산·목표 화장품 개수 <span class="unit-piece">(개)</span>
-          <input type="text" id="reversePieces" inputmode="numeric" class="reverse-input" placeholder="예: 2400" aria-label="생산 또는 목표 화장품 개수" />
-        </label>
-        <label class="reverse-field">
-          제품 1개당 내용량 <span class="unit-suffix">(mL / g)</span>
-          <div class="reverse-per-wrap">
-            <input type="text" id="reversePer" inputmode="decimal" class="reverse-input" placeholder="예: 50" aria-label="제품 1개당 내용량 숫자" />
-            <select id="reverseUnit" class="unit-select" aria-label="1개당 단위 mL 또는 g">
-              <option value="ml">mL</option>
-              <option value="g">g</option>
-            </select>
-          </div>
-        </label>
-      </div>
-      <p class="reverse-result" id="reverseResult" role="status">
-        개수와 1개당 내용량을 넣으면 여기에 벌크(kg)가 표시됩니다.
-      </p>
-    </section>
-
-    <footer class="footer">
-      <p>브라우저에서만 동작하며 데이터는 저장되지 않습니다.</p>
-    </footer>
-  </div>
-  <script src="reverse.js"></script>
+  <p><a href="index.html#reverse">역산 · 개수→벌크</a>로 이동합니다.</p>
 </body>
 </html>

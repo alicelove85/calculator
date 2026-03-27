@@ -23,6 +23,12 @@ git push -u origin main
 
    - 예: `https://본인아이디.github.io/calculator/`
 
+## 한 페이지에서 쓰기
+
+- **박스·수율**과 **역산**은 모두 `index.html` 안에서 위쪽 탭으로 전환합니다.
+- 주소 예: `…/index.html#reverse` 로 역산 화면만 바로 열 수 있습니다.
+- 예전 주소 `reverse.html`은 자동으로 `index.html#reverse`로 넘깁니다.
+
 ## 로컬에서 보기
 
 ```bash
