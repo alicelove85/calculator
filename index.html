@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>몇 박스 나오는지 계산기</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <nav class="site-nav" aria-label="페이지 이동">
+      <a href="index.html" class="site-nav-btn site-nav-btn--active" aria-current="page">박스·수율 계산</a>
+      <a href="reverse.html" class="site-nav-btn" target="_blank" rel="noopener noreferrer">역산 · 개수→벌크</a>
+    </nav>
+
+    <header class="header">
+      <h1>몇 박스 나오는지 계산기</h1>
+      <p class="subtitle"><strong>사용한 벌크(kg)</strong>, <strong>1개당 mL 또는 g</strong>, <strong>박스당 입수(개)</strong>를 넣으면 <strong>화장품 개수</strong>·<strong>박스</strong>와 각 행 아래 <strong>완전 박스 기준 수율 표</strong>를 볼 수 있습니다.</p>
+    </header>
+
+    <section class="panel formula">
+      <h2>계산식</h2>
+      <p class="formula-text"><strong>최대 생산수(이론) = (사용한 벌크 kg × 1000) ÷ 제품 1개당 (mL 또는 g)</strong> (손실 없을 때 상한 · mL는 1 mL ≈ 1 g로 환산)</p>
+      <p class="formula-text formula-text-second"><strong>97% 목표 화장품 개수 ≈ 최대 생산수(이론) × 0.97</strong></p>
+      <p class="formula-text formula-text-second"><strong>완전 박스 수</strong> = 화장품 개수 ÷ 박스당 입수의 몫(내림) · 남은 개수 = 나머지</p>
+      <p class="formula-text formula-text-second"><strong>완전 박스 기준 표</strong>: 이론 개수 N개·박스당 입수 B개일 때, <strong>수율(%) = (완전 박스 × B) ÷ N × 100</strong>이 <strong>97~100%</strong>인 완전 박스 수 k만 모아 표시합니다. <strong>화장품 개수 = k × B</strong>(잔여 없음).</p>
+      <p class="hint">행마다 <strong>1개당 단위</strong>를 mL 또는 g로 고를 수 있습니다. mL는 <strong>1 mL ≈ 1 g</strong>으로 kg 벌크와 맞춥니다. g는 제품 표기 중량(내용량) 그대로 쓰면 됩니다. <strong>계산</strong> 버튼으로 전체 행을 다시 계산할 수 있으며, 입력 중에도 행마다 자동 반영됩니다.</p>
+    </section>
+
+    <section class="panel controls">
+      <button type="button" id="calcAll" class="btn primary">계산</button>
+      <button type="button" id="addRow" class="btn ghost">행 추가</button>
+      <button type="button" id="clearAll" class="btn ghost">전체 비우기</button>
+    </section>
+
+    <section class="panel table-wrap">
+      <table class="yield-table">
+        <thead>
+          <tr>
+            <th scope="col">사용한 벌크량 <span class="unit-suffix">(kg)</span></th>
+            <th scope="col">제품 1개당 내용량 <span class="unit-suffix">(mL / g)</span></th>
+            <th scope="col" class="col-per-box">박스당 입수 <span class="unit-piece">(개/박스)</span></th>
+            <th scope="col" class="col-pcs">개수·박스 환산</th>
+            <th scope="col" class="col-note">비고</th>
+            <th scope="col" class="col-actions"></th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </section>
+
+    <footer class="footer">
+      <p>브라우저에서만 동작하며 데이터는 저장되지 않습니다. 필요하면 스크린샷이나 인쇄로 보관하세요.</p>
+    </footer>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
