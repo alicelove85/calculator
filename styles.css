@@ -106,6 +106,22 @@ body {
   font-size: 1rem;
 }
 
+.speed-qty-row {
+  display: flex;
+  align-items: stretch;
+  gap: 0.45rem;
+}
+
+.speed-qty-row .reverse-input {
+  flex: 1;
+  min-width: 0;
+}
+
+.speed-unit-select {
+  flex-shrink: 0;
+  min-width: 6.5rem;
+}
+
 .reverse-per-wrap {
   display: flex;
   align-items: stretch;
