@@ -36,6 +36,21 @@
     }).format(n);
   }
 
+  /** 예: 6개/분 · 360개/시간 */
+  function speedPairText(perMin, perHour, suf) {
+    const u = suf || "";
+    return (
+      "<strong>분당 속도</strong> " +
+      formatRate(perMin) +
+      u +
+      "/분 · " +
+      "<strong>시간당 속도</strong> " +
+      formatRate(perHour) +
+      u +
+      "/시간"
+    );
+  }
+
   function updateSpeed() {
     if (!resultEl) return;
     const qTrim = String(qtyEl?.value ?? "").trim();
@@ -50,7 +65,6 @@
     const mins = parseInput(minEl?.value);
     const workers = parseWorkers(workersEl?.value);
     const suf = unitSuffix();
-    const uShow = suf ? " " + suf : "";
 
     if (Number.isNaN(qty) || qty < 0) {
       resultEl.textContent = "작업량을 0 이상의 숫자로 입력해 주세요.";
@@ -83,33 +97,23 @@
 
     if (workers === 1) {
       resultEl.innerHTML =
-        '<span class="speed-result-line">분당 약 <strong>' +
-        formatRate(linePerMin) +
-        uShow +
-        "</strong>, 시간당 약 <strong>" +
-        formatRate(linePerHour) +
-        uShow +
-        "</strong>입니다. " +
-        "(전체와 1명당 동일) " +
+        '<span class="speed-result-line speed-result-speed">' +
+        speedPairText(linePerMin, linePerHour, suf) +
+        "</span> " +
+        '<span class="reverse-result-sub">(전체·1명당 동일)</span> ' +
         sub;
       return;
     }
 
     resultEl.innerHTML =
-      '<span class="speed-result-line"><strong>전체(라인)</strong> 분당 약 <strong>' +
-      formatRate(linePerMin) +
-      uShow +
-      "</strong>, 시간당 약 <strong>" +
-      formatRate(linePerHour) +
-      uShow +
-      "</strong></span>" +
-      '<span class="speed-result-line"><strong>작업자 1명당</strong> 분당 약 <strong>' +
-      formatRate(perPerMin) +
-      uShow +
-      "</strong>, 시간당 약 <strong>" +
-      formatRate(perPerHour) +
-      uShow +
-      "</strong></span>" +
+      '<span class="speed-result-line"><strong>전체(라인)</strong></span>' +
+      '<span class="speed-result-line speed-result-speed">' +
+      speedPairText(linePerMin, linePerHour, suf) +
+      "</span>" +
+      '<span class="speed-result-line"><strong>작업자 1명당</strong></span>' +
+      '<span class="speed-result-line speed-result-speed">' +
+      speedPairText(perPerMin, perPerHour, suf) +
+      "</span>" +
       sub;
   }
 
