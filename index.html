@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="화장품 벌크·박스·수율 계산과 개수→벌크 역산" />
+  <meta name="description" content="화장품 벌크·박스·수율 계산, 개수→벌크 역산, 분당속도·벌크 비중 수율" />
   <meta name="theme-color" content="#0d9488" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="박스·수율" />
   <title>몇 박스 나오는지 계산기</title>
-  <link rel="manifest" href="site.webmanifest?v=11" />
-  <link rel="icon" href="icon.svg?v=11" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="icon-180.png?v=11" sizes="180x180" />
+  <link rel="manifest" href="site.webmanifest?v=12" />
+  <link rel="icon" href="icon.svg?v=12" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="icon-180.png?v=12" sizes="180x180" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=11" />
+  <link rel="stylesheet" href="styles.css?v=12" />
 </head>
 <body>
   <div class="app">
@@ -24,7 +24,7 @@
       <a href="#panel-main" id="tab-main" class="site-nav-btn site-nav-btn--active" aria-current="page">박스·수율 계산</a>
       <a href="#reverse" id="tab-reverse" class="site-nav-btn">역산 · 개수→벌크</a>
       <a href="#loss" id="tab-loss" class="site-nav-btn">시간 → 분 환산</a>
-      <a href="#speed" id="tab-speed" class="site-nav-btn">분당속도 (EA)</a>
+      <a href="#speed" id="tab-speed" class="site-nav-btn">분당속도 · 벌크수율</a>
     </nav>
 
     <section id="panel-main" class="app-panel" aria-labelledby="heading-main">
@@ -131,16 +131,17 @@
 
     <section id="speed" class="app-panel" aria-labelledby="heading-speed" hidden>
     <header class="header">
-      <h1 id="heading-speed">분당속도 (EA)</h1>
-      <p class="subtitle"><strong>작업량 (EA)</strong>와 <strong>소요 시간(분)</strong>을 넣으면 <strong>분당속도 (EA)</strong>만 계산합니다.</p>
+      <h1 id="heading-speed">분당속도 · 벌크 수율 계산</h1>
+      <p class="subtitle"><strong>분당속도 (EA)</strong>와 <strong>벌크(kg)·비중·충진(ml)</strong> 기준 <strong>이론·기대 개수</strong>, <strong>실제 개수로 수율(%)</strong>을 같은 화면에서 쓸 수 있습니다.</p>
     </header>
 
-    <section class="panel formula">
+    <section class="panel formula speed-tool-block">
+      <p class="speed-tool-title">분당속도 (EA)</p>
       <h2>계산식</h2>
       <p class="formula-text"><strong>분당속도 (EA) = 작업량 (EA) ÷ 소요 시간(분)</strong></p>
     </section>
 
-    <section class="panel reverse-panel" aria-label="작업량과 소요 시간 입력">
+    <section class="panel reverse-panel speed-tool-block" aria-label="작업량과 소요 시간 입력">
       <div class="reverse-grid">
         <label class="reverse-field">
           작업량 <span class="unit-suffix">(EA)</span>
@@ -155,16 +156,66 @@
         작업량과 소요 시간(분)을 넣으면 여기에 분당속도 (EA)가 표시됩니다.
       </p>
     </section>
+
+    <section class="panel formula speed-tool-block speed-tool-block--bulk">
+      <p class="speed-tool-title">벌크(kg)로 이론·기대 개수</p>
+      <h2>계산식</h2>
+      <p class="formula-text"><strong>이론 개수 ≈ (벌크 kg × 1000) ÷ (1개당 충진 ml × 비중)</strong> · 비중은 물=1.0 기준(1 ml당 g에 근사)</p>
+      <p class="formula-text formula-text-second"><strong>기대 개수 ≈ 이론 개수 × (가정 공정 수율 % ÷ 100)</strong></p>
+    </section>
+
+    <section class="panel reverse-panel speed-tool-block" aria-label="벌크 비중 충진 입력">
+      <div class="reverse-grid reverse-grid--bulk">
+        <label class="reverse-field">
+          사용 벌크량 <span class="unit-suffix">(kg)</span>
+          <input type="text" id="bulkKg" inputmode="decimal" class="reverse-input" placeholder="예: 100" value="100" aria-label="벌크 kg" />
+        </label>
+        <label class="reverse-field">
+          1개당 충진량 <span class="unit-suffix">(mL)</span>
+          <input type="text" id="bulkFillMl" inputmode="decimal" class="reverse-input" placeholder="예: 50" value="50" aria-label="1개당 충진 ml" />
+        </label>
+        <label class="reverse-field">
+          제품 비중 <span class="unit-suffix">(물=1.0)</span>
+          <input type="text" id="bulkSg" inputmode="decimal" class="reverse-input" placeholder="예: 1.0" value="1.0" aria-label="제품 비중" />
+        </label>
+        <label class="reverse-field">
+          가정 공정 수율 <span class="unit-suffix">(%)</span>
+          <input type="text" id="bulkAssumeYield" inputmode="decimal" class="reverse-input" placeholder="예: 100" value="100" aria-label="가정 공정 수율 퍼센트" />
+        </label>
+      </div>
+      <p class="hint speed-tool-hint">손실·잔량을 미리 넣어 기대 개수를 볼 때 수율(%)을 조정합니다. 100이면 이론 최대에 가깝게 계산합니다.</p>
+      <p class="reverse-result" id="bulkForwardResult" role="status">
+        벌크·충진·비중을 넣으면 이론 개수·기대 개수가 표시됩니다.
+      </p>
+    </section>
+
+    <section class="panel formula speed-tool-block">
+      <p class="speed-tool-title">실제 개수로 수율(%)</p>
+      <h2>계산식</h2>
+      <p class="formula-text"><strong>수율(%) = (실제 양품 개수 ÷ 이론 개수) × 100</strong> · 이론 개수는 위와 동일한 벌크·충진·비중으로 계산합니다.</p>
+    </section>
+
+    <section class="panel reverse-panel speed-tool-block" aria-label="실제 양품 개수 입력">
+      <label class="reverse-field reverse-field--single">
+        실제 양품 개수 <span class="unit-piece">(개)</span>
+        <input type="text" id="bulkActualQty" inputmode="numeric" class="reverse-input" placeholder="예: 1950" value="1950" aria-label="실제 양품 개수" />
+      </label>
+      <p class="hint speed-tool-hint">완제·양품 기준 수량을 넣으면 위 공통 입력의 이론 개수 대비 수율이 나옵니다.</p>
+      <p class="reverse-result" id="bulkYieldResult" role="status">
+        실제 개수를 넣으면 수율(%)이 표시됩니다.
+      </p>
+    </section>
     </section>
 
     <footer class="footer">
       <p>브라우저에서만 동작하며 데이터는 저장되지 않습니다. GitHub Pages 등 웹에 올려도 같은 방식으로 동작합니다.</p>
     </footer>
   </div>
-  <script src="app.js?v=11"></script>
-  <script src="reverse.js?v=11"></script>
-  <script src="loss.js?v=11"></script>
-  <script src="speed.js?v=11"></script>
-  <script src="tab.js?v=11"></script>
+  <script src="app.js?v=12"></script>
+  <script src="reverse.js?v=12"></script>
+  <script src="loss.js?v=12"></script>
+  <script src="speed.js?v=12"></script>
+  <script src="bulk-yield.js?v=12"></script>
+  <script src="tab.js?v=12"></script>
 </body>
 </html>

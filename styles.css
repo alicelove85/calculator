@@ -110,6 +110,37 @@ body {
   font-size: 1.05rem;
 }
 
+.speed-tool-block {
+  margin-bottom: 1rem;
+}
+
+.speed-tool-block--bulk {
+  margin-top: 0.25rem;
+}
+
+.speed-tool-title {
+  margin: 0 0 0.35rem;
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.speed-tool-block.formula .speed-tool-title + h2 {
+  margin-top: 0.35rem;
+}
+
+.speed-tool-hint {
+  margin: 0.5rem 0 0.75rem;
+}
+
+.reverse-field--single {
+  max-width: 22rem;
+}
+
+.reverse-grid--bulk {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
 .speed-ea-label {
   font-weight: 600;
   color: var(--muted);

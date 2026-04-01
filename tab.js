@@ -57,7 +57,7 @@
     } else if (isLoss) {
       document.title = "시간 → 분 환산";
     } else if (isSpeed) {
-      document.title = "분당속도 (EA)";
+      document.title = "분당속도 · 벌크 수율 계산";
     } else {
       document.title = "몇 박스 나오는지 계산기";
     }
